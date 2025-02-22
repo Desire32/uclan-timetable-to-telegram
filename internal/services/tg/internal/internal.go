@@ -2,10 +2,11 @@ package internal
 
 import (
 	"fmt"
+	"time"
+	"uclan/internal/services/timetable/data"
+
 	tg "github.com/mymmrac/telego"
 	tu "github.com/mymmrac/telego/telegoutil"
-	"time"
-	"timetable/internal/services/timetable/data"
 )
 
 func GetScheduleVariations(schedules []data.Schedules, bot *tg.Bot, query tg.CallbackQuery, scheduleType string) *tg.SendMessageParams {

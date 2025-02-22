@@ -2,13 +2,14 @@ package tg
 
 import (
 	"fmt"
+	"os"
+	"uclan/internal/services/tg/internal"
+	"uclan/internal/services/timetable"
+	"uclan/internal/services/timetable/data"
+
 	tg "github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"
-	"os"
-	"timetable/internal/services/tg/internal"
-	"timetable/internal/services/timetable"
-	"timetable/internal/services/timetable/data"
 )
 
 type TelegramBot struct {

@@ -4,16 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/chromedp/chromedp"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"runtime"
 	"sync"
 	"time"
-	"timetable/internal/services/tg"
-	"timetable/internal/services/timetable"
-	"timetable/internal/services/timetable/data"
+	"uclan/internal/services/tg"
+	"uclan/internal/services/timetable"
+	"uclan/internal/services/timetable/data"
+
+	"github.com/chromedp/chromedp"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -59,7 +60,7 @@ func main() {
 	// SETUP CONFIG
 	ctx, cancel := chromedp.NewExecAllocator(context.Background(),
 		chromedp.ExecPath(os.Getenv("BROWSER_PATH")),
-		chromedp.Flag("headless", false), 
+		chromedp.Flag("headless", false),
 		chromedp.WindowSize(1280, 1024),
 	)
 	defer cancel()
