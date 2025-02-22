@@ -53,6 +53,10 @@ func main() {
 	badgeService := &timetable.BadgeService{}
 	///////////////////////
 
+	//MONGODB INTERFACE
+	mongoService := &timetable.MongoService{}
+	////////////////////////
+
 	// TELEGRAM INTERFACES
 	tgService := &tg.ServiceTg{}
 	////////////////
@@ -60,7 +64,8 @@ func main() {
 	// SETUP CONFIG
 	ctx, cancel := chromedp.NewExecAllocator(context.Background(),
 		chromedp.ExecPath(os.Getenv("BROWSER_PATH")),
-		chromedp.Flag("headless", false),
+		// chromedp.Flag("headless", false), // uncomment if you want to see how it looks like in real time
+		chromedp.Flag("headless", true),
 		chromedp.WindowSize(1280, 1024),
 	)
 	defer cancel()
@@ -68,7 +73,7 @@ func main() {
 	ctx, cancel = chromedp.NewContext(ctx)
 	defer cancel()
 
-	ctx, cancel = context.WithTimeout(ctx, 90*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 180*time.Second)
 	defer cancel()
 
 	if err := authService.MicrosoftLogin(ctx); err != nil {
@@ -103,6 +108,18 @@ func main() {
 	fmt.Println("Информация о расписании:", scheduleInfo)
 	fmt.Println("Информация о значках:", badgesInfo)
 
+	// Uncomment if you want to add data to MongoDB, prepare login data into .env file
+	// if err := mongoService.MongoSend(scheduleInfo); err != nil {
+	// 	log.Fatal(err)
+	// }
+	// if err := mongoService.MongoSend(badgesInfo); err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// заглушки
+	_ = mongoService.MongoSend(scheduleInfo)
+	_ = mongoService.MongoSend(badgesInfo)
+
 	if err := json.Unmarshal([]byte(modulesInfo), &data.Badge); err != nil {
 		log.Fatal(err)
 	}
@@ -115,10 +132,12 @@ func main() {
 
 	data.BadgeAmount = badgesInfo
 
-	go func() {
-		if err := tgService.TgConnection(); err != nil {
-			log.Fatal(err)
-		}
-	}()
-	time.Sleep(100 * time.Minute)
+	// go func() {
+	// 	if err := tgService.TgConnection(); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }()
+	go tgService.TgConnection()
+
+	select {}
 }

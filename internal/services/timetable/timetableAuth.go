@@ -2,10 +2,11 @@ package timetable
 
 import (
 	"context"
-	"github.com/chromedp/chromedp"
 	"log"
 	"os"
 	"time"
+
+	"github.com/chromedp/chromedp"
 )
 
 type TimeService struct {
@@ -14,7 +15,7 @@ type TimeService struct {
 func (t *TimeService) TimetableAuth(ctx context.Context) error {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate("https://timetable.cyprus.uclan.ac.uk/"),
-		chromedp.Sleep(3*time.Second),                
+		chromedp.Sleep(3*time.Second),
 		chromedp.WaitVisible(`body`, chromedp.ByQuery),
 	)
 	if err != nil {

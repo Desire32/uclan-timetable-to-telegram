@@ -44,7 +44,7 @@ func (m *MongoService) MongoSend(jsonData string) error {
 	if err := json.Unmarshal([]byte(jsonData), &data.Schedule); err != nil {
 		return fmt.Errorf("parsing error : %w", err)
 	}
-	collection := client.Database("Timetable").Collection("schedule")
+	collection := client.Database("Timetable").Collection("schedule") // create database Timetable first
 
 	for _, entry := range data.Schedule {
 		_, err := collection.InsertOne(ctx, entry)
