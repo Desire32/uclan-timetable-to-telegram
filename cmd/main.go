@@ -27,12 +27,6 @@ func main() {
 	_ = ls
 	//////////////////////////
 
-	// channels for coop work
-	//scheduleChan := make(chan string)
-	//moduleChan := make(chan string)
-	//badgesChan := make(chan string)
-	//////////////////////////
-
 	// SYNC
 	var mu sync.Mutex
 	//////////////////////////
@@ -73,7 +67,7 @@ func main() {
 	ctx, cancel = chromedp.NewContext(ctx)
 	defer cancel()
 
-	ctx, cancel = context.WithTimeout(ctx, 180*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 240*time.Second)
 	defer cancel()
 
 	if err := authService.MicrosoftLogin(ctx); err != nil {
@@ -87,26 +81,17 @@ func main() {
 	mu.Lock()
 	scheduleInfo := timetableService.TimetableRetrieve(ctx)
 	mu.Unlock()
-	//scheduleChan <- scheduleInfo
 
 	mu.Lock()
 	badgesInfo := badgeService.BadgeRetrieve(ctx)
 	mu.Unlock()
-	//badgesChan <- badgesInfo
 
 	mu.Lock()
 	modulesInfo := badgeService.ModulesRetrieve(ctx)
 	mu.Unlock()
-	//moduleChan <- modulesInfo
 
-	// Получаем результаты из каналов
-	//scheduleInfo = <-scheduleChan
-	//badgesInfo = <-badgesChan
-	//modulesInfo = <-moduleChan
-
-	// Выводим результаты
-	fmt.Println("Информация о расписании:", scheduleInfo)
-	fmt.Println("Информация о значках:", badgesInfo)
+	// fmt.Println("Информация о расписании:", scheduleInfo)
+	// fmt.Println("Информация о значках:", badgesInfo)
 
 	// Uncomment if you want to add data to MongoDB, prepare login data into .env file
 	// if err := mongoService.MongoSend(scheduleInfo); err != nil {
@@ -123,20 +108,16 @@ func main() {
 	if err := json.Unmarshal([]byte(modulesInfo), &data.Badge); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Информация о модулях: ", data.Badge)
+	// fmt.Println("Информация о модулях: ", data.Badge)
 
 	if err := json.Unmarshal([]byte(scheduleInfo), &data.Schedule); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Информация о расписании:", data.Schedule)
+	// fmt.Println("Информация о расписании:", data.Schedule)
 
 	data.BadgeAmount = badgesInfo
 
-	// go func() {
-	// 	if err := tgService.TgConnection(); err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }()
+	// telegram api launch
 	go tgService.TgConnection()
 
 	select {}
