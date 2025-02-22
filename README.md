@@ -71,4 +71,11 @@ Initial launch:
 
 Bot interaction:
 
+To interact with the bot, use "/menu" command.
+
 ![Screenshot 2025-02-22 at 15 54 51 1](https://github.com/user-attachments/assets/72b02227-761c-4206-b146-9c868c2d043a)
+
+
+## License
+
+The project is protected by MIT License.
