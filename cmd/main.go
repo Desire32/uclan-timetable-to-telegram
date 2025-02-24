@@ -80,15 +80,15 @@ func main() {
 
 	mu.Lock()
 	scheduleInfo := timetableService.TimetableRetrieve(ctx)
-	mu.Unlock()
+	defer mu.Unlock()
 
 	mu.Lock()
 	badgesInfo := badgeService.BadgeRetrieve(ctx)
-	mu.Unlock()
+	defer mu.Unlock()
 
 	mu.Lock()
 	modulesInfo := badgeService.ModulesRetrieve(ctx)
-	mu.Unlock()
+	defer mu.Unlock()
 
 	// fmt.Println("Информация о расписании:", scheduleInfo)
 	// fmt.Println("Информация о значках:", badgesInfo)
