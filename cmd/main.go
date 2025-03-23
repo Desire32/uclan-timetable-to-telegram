@@ -3,10 +3,8 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
-	"runtime"
 	"sync"
 	"time"
 	"uclan/internal/services/tg"
@@ -17,23 +15,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func init() {
+	_ = godotenv.Load(".env")
+}
 
-	// MEMORY COUNT PART
-	var mem runtime.MemStats
-	runtime.ReadMemStats(&mem)
-	fmt.Printf("До выполнения: %v KB\n", mem.Alloc/1024)
-	ls := make([]int, 1e6)
-	_ = ls
-	//////////////////////////
+func main() {
 
 	// SYNC
 	var mu sync.Mutex
 	//////////////////////////
-
-	// .env
-	_ = godotenv.Load("../internal/config/.env")
-	////////////////////
 
 	// CONNECTING INTERFACE
 	authService := &timetable.AuthService{}
@@ -100,8 +90,6 @@ func main() {
 	// if err := mongoService.MongoSend(badgesInfo); err != nil {
 	// 	log.Fatal(err)
 	// }
-
-	// заглушки
 	_ = mongoService.MongoSend(scheduleInfo)
 	_ = mongoService.MongoSend(badgesInfo)
 
@@ -118,7 +106,9 @@ func main() {
 	data.BadgeAmount = badgesInfo
 
 	// telegram api launch
-	go tgService.TgConnection()
-
-	select {}
+	go func() {
+		if err := tgService.TgConnection(); err != nil {
+			log.Fatal(err)
+		}
+	}()
 }

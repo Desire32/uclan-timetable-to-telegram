@@ -1,14 +1,13 @@
 package data
 
-// Цельное расписание
 type Schedules struct {
-	Day     string    `bson:"day" json:"day"`
-	Modules []Modules `bson:"modules" json:"modules"`
+	Day     string    `json:"day"`
+	Modules []Modules `json:"modules"`
 }
 
 type Modules struct {
-	Time string `bson:"time" json:"time"`
-	Name string `bson:"name" json:"name"`
+	Time string `json:"time"`
+	Name string `json:"name"`
 }
 
 type Badges struct {

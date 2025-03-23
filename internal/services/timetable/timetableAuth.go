@@ -39,7 +39,7 @@ func (t *TimeService) TimetableRetrieve(ctx context.Context) string {
 		chromedp.Sleep(2*time.Second),
 		chromedp.WaitVisible("body", chromedp.ByQuery),
 		chromedp.WaitVisible(".fc-content-skeleton tbody tr td:not(.fc-axis)", chromedp.ByQueryAll),
-		chromedp.Sleep(2*time.Second), // Дополнительная пауза для надежности
+		chromedp.Sleep(2*time.Second),
 		chromedp.Evaluate(`
 			const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 			let schedule = [];

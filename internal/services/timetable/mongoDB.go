@@ -33,12 +33,12 @@ func (m *MongoService) MongoSend(jsonData string) error {
 
 	client, err := m.MongoConnect()
 	if err != nil {
-		return fmt.Errorf("Connection error:  %w", err)
+		return fmt.Errorf("connection error:  %w", err)
 	}
 	defer func(client *mongo.Client, ctx context.Context) {
 		err := client.Disconnect(ctx)
 		if err != nil {
-
+			log.Fatal(err)
 		}
 	}(client, context.TODO())
 	if err := json.Unmarshal([]byte(jsonData), &data.Schedule); err != nil {

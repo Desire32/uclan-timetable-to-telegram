@@ -2,9 +2,10 @@ package timetable
 
 import (
 	"context"
-	"github.com/chromedp/chromedp"
 	"log"
 	"time"
+
+	"github.com/chromedp/chromedp"
 )
 
 var (
