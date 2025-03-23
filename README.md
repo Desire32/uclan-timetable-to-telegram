@@ -2,9 +2,8 @@
   <img src="https://github.com/user-attachments/assets/e1aa2fc0-8a16-47be-ba1f-6e49f32f6a70" alt="Frame 1" />
 </p>
 
-It works in the background, processes requests and allows students to easily get the latest timetable.
 
-This project does not collect any of your data, all code is available to view to certify. This project is also just an implementation and not a finished solution and was done only in research purposes, so it might be unstable.
+This project does not collect any of your data, all code is available to view to certify. This project is just an implementation and not a finished solution and was done only in research purposes.
 
 ## Getting started
 
